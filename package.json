@@ -1,0 +1,43 @@
+{
+  "name": "redux-title",
+  "version": "0.0.11",
+  "description": "Synchronization of docment title and redux state",
+  "main": "lib/index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DJCordhose/redux-title.git"
+  },
+  "authors": [
+    "Oliver Zeigermann"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "mkdir -p lib && babel ./src/index.js --out-file ./lib/index.js",
+    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test:karma": "karma start --single-run"
+  },
+  "tags": [
+    "react",
+    "redux"
+  ],
+  "keywords": [
+    "react",
+    "redux",
+    "router"
+  ],
+  "devDependencies": {
+    "babel-cli": "6.2.0",
+    "babel-core": "6.2.1",
+    "babel-preset-es2015": "6.1.18",
+    "expect": "1.13.0",
+    "jsdom": "7.1.0",
+    "karma": "0.13.15",
+    "karma-babel-preprocessor": "6.0.1",
+    "karma-chrome-launcher": "0.2.1",
+    "karma-mocha": "0.2.1",
+    "karma-mocha-reporter": "1.1.3",
+    "mocha": "2.3.4",
+    "mocha-jsdom": "1.0.0",
+    "redux": "3.0.4"
+  }
+}
