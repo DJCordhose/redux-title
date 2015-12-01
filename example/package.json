@@ -1,6 +1,6 @@
 {
-  "name": "react-hello-world",
-  "version": "1.0.0",
+  "name": "redux-title-example",
+  "version": "0.0.1",
   "description": "",
   "scripts": {
     "clean": "rm -rf dist/ public/dist/",
@@ -21,6 +21,7 @@
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
-    "redux": "^3.0.4"
+    "redux": "^3.0.4",
+    "redux-title": "0.0.2"
   }
 }

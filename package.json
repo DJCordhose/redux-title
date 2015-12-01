@@ -1,6 +1,6 @@
 {
   "name": "redux-title",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Synchronization of document title and redux state",
   "main": "lib/index",
   "repository": {
@@ -15,7 +15,8 @@
     "build": "mkdir -p lib && babel ./src/index.js --out-file ./lib/index.js",
     "test": "mocha --compilers js:babel-core/register --recursive",
     "test:karma": "karma start --single-run",
-    "test:karma:watch": "karma start"
+    "test:karma:watch": "karma start",
+    "prepublish": "npm run build"
   },
   "tags": [
     "react",

@@ -21,7 +21,7 @@ class HelloMessage extends React.Component {
             </div>);
     }
 }
-import {updateTitle} from '../../src/index'
+import {updateTitle} from 'redux-title'
 
 function mapStateToProps(state) {
     return {
