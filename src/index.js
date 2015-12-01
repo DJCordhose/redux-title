@@ -26,7 +26,10 @@ export function titleReducer(state = initialState, action) {
 // https://developer.mozilla.org/en/docs/Web/API/MutationObserver
 // http://caniuse.com/#feat=mutationobserver
 // https://msdn.microsoft.com/en-us/library/ms536956(v=vs.85).aspx
+
 export function subscribeToTitle(getTitle, setTitle) {
+    const titleElement = document.querySelector('title');
+    const docEl = document.documentElement;
 
     function titleModified() {
         const title = document.title;
@@ -36,32 +39,43 @@ export function subscribeToTitle(getTitle, setTitle) {
         }
     }
 
-    const titleElement = document.querySelector('title');
-    const docEl = document.documentElement;
-
-    if (docEl && docEl.addEventListener) {
-        docEl.addEventListener("DOMSubtreeModified", (evt) => {
-            const t = evt.target;
-            if (t === titleElement || (t.parentNode && t.parentNode === titleElement)) {
-                titleModified();
-            }
-        }, false);
-        // TODO deregister function
-        return () => {};
-    } else if (typeof MutationObserver !== 'undefined') {
+    function subscribeAsObserver() {
         const observer = new MutationObserver(() => {
             titleModified();
         });
         observer.observe(titleElement, {childList: true});
         return () => observer.disconnect();
-    } else {
+    }
+
+
+    function subscribeIE() {
         document.onpropertychange = function () {
             if (window.event.propertyName == "title") {
                 titleModified();
             }
         };
-        // TODO deregister function
-        return () => {};
+        return () => document.onpropertychange = undefined;
+    }
+
+    function subscribeAsModification() {
+        const type = "DOMSubtreeModified";
+        const listener = (evt) => {
+            const t = evt.target;
+            if (t === titleElement || (t.parentNode && t.parentNode === titleElement)) {
+                titleModified();
+            }
+        };
+        docEl.addEventListener(type, listener, false);
+        return () => docEl.removeEventListener(type, listener, false);
+    }
+
+    if (docEl && docEl.addEventListener) {
+        return subscribeAsModification();
+        // stangely does not work in chrome when started over karma
+    } else if (typeof MutationObserver !== 'undefined') {
+        return subscribeAsObserver();
+    } else {
+        return subscribeIE();
     }
 }
 

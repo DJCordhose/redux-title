@@ -2,7 +2,8 @@ const webpack = require('webpack');
 
 module.exports = function (config) {
     config.set({
-        browsers: ['Chrome'],
+        //browsers: ['Chrome', 'Firefox', 'PhantomJS', 'Safari'],
+        browsers: ['PhantomJS'],
         frameworks: ['mocha'],
         reporters: ['mocha'],
 
@@ -28,6 +29,6 @@ module.exports = function (config) {
 
         webpackMiddleware: {
             noInfo: true
-        },
+        }
     });
 };

@@ -21,12 +21,19 @@ describe('syncReduxAndTitle', () => {
         }
     });
 
-    it('subscribeToTitle works', () => {
+    it('subscribe works', () => {
         let newTitle;
         const unsubscribe = subscribeToTitle(() => 'old', (title) => newTitle = title);
         document.title = 'new';
-        unsubscribe();
         expect(newTitle).toEqual('new');
+    });
+
+    it('unsubscribe works', () => {
+        let newTitle = 'unset';
+        const unsubscribe = subscribeToTitle(() => 'old', (title) => newTitle = title);
+        unsubscribe();
+        document.title = 'no effect';
+        expect(newTitle).toEqual('unset');
     });
 
     it('syncs redux -> title', () => {
