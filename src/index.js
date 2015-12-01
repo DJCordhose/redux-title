@@ -4,47 +4,70 @@ export const UPDATE_TITLE = "redux-title/UPDATE_TITLE";
 
 export function updateTitle(title) {
     return {
-        type: UPDATE_PATH,
+        type: UPDATE_TITLE,
         title: title
     }
 }
 
 // Reducer
 
-const initialState = {
-    title: undefined
-};
+const initialState = document.title;
 
 export function titleReducer(state = initialState, action) {
     if (action.type === UPDATE_TITLE) {
-        return {
-            title: action.title
-        };
+        return action.title;
     }
     return state;
 }
 
 // Syncing
 
-export function syncReduxAndTitle(store) {
-    // https://developer.mozilla.org/en/docs/Web/API/MutationObserver
-    // TODO: Will not work in pre IE11
-    // http://caniuse.com/#feat=mutationobserver
-    // Need to implement something like this
-    // https://msdn.microsoft.com/en-us/library/ms536956(v=vs.85).aspx
+// http://stackoverflow.com/questions/2497200/how-to-listen-for-changes-to-the-title-element
+// https://developer.mozilla.org/en/docs/Web/API/MutationObserver
+// http://caniuse.com/#feat=mutationobserver
+// https://msdn.microsoft.com/en-us/library/ms536956(v=vs.85).aspx
+export function subscribeToTitle(getTitle, setTitle) {
+
+    function titleModified() {
+        const title = document.title;
+        const oldTitle = getTitle();
+        if (oldTitle !== title) {
+            setTitle(title);
+        }
+    }
 
     const titleElement = document.querySelector('title');
-    const observer = new MutationObserver(() => {
-        const title = document.title;
-        const oldTitle = store.getState().title;
-        if (oldTitle !== title) {
-            store.dispatch(updateTitle(title))
-        }
-    });
-    observer.observe(titleElement, {childList: true});
-    function unsubscribeTitle() {
-        observer.disconnect();
+    const docEl = document.documentElement;
+
+    if (docEl && docEl.addEventListener) {
+        docEl.addEventListener("DOMSubtreeModified", (evt) => {
+            const t = evt.target;
+            if (t === titleElement || (t.parentNode && t.parentNode === titleElement)) {
+                titleModified();
+            }
+        }, false);
+        // TODO deregister function
+        return () => {};
+    } else if (typeof MutationObserver !== 'undefined') {
+        const observer = new MutationObserver(() => {
+            titleModified();
+        });
+        observer.observe(titleElement, {childList: true});
+        return () => observer.disconnect();
+    } else {
+        document.onpropertychange = function () {
+            if (window.event.propertyName == "title") {
+                titleModified();
+            }
+        };
+        // TODO deregister function
+        return () => {};
     }
+}
+
+export function syncReduxAndTitle(store) {
+
+    const unsubscribeFromTitle = subscribeToTitle(() => store.getState().title, (title) => store.dispatch(updateTitle(title)));
 
     const unsubscribeStore = store.subscribe(() => {
         const title = store.getState().title;
@@ -55,7 +78,7 @@ export function syncReduxAndTitle(store) {
     });
 
     return function unsubscribe() {
-        unsubscribeTitle();
+        unsubscribeFromTitle();
         unsubscribeStore();
     };
 }
