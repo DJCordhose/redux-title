@@ -1,19 +1,19 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 class HelloMessage extends React.Component {
     render() {
-        const {greeting, updateGreeting} = this.props;
+        const {title, updateTitle} = this.props;
         return (
             <div>
                 <input ref="in"
-                       onChange={event => updateGreeting(event.target.value)}
-                       value={greeting} />
-                <p>{greeting}, World</p>
+                       onChange={event => updateTitle(event.target.value)}
+                       value={title} />
+                <p>{title}</p>
                 <button
                     onClick={() => {
-                        updateGreeting('');
+                        updateTitle('');
                         this.refs.in.focus();
                     }}>
                     Clear
@@ -21,16 +21,16 @@ class HelloMessage extends React.Component {
             </div>);
     }
 }
-import * as Actions from './actions';
+import {updateTitle} from '../../src/index'
 
 function mapStateToProps(state) {
     return {
-        greeting: state.greeting
+        title: state.title
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(Actions, dispatch);
+    return bindActionCreators({updateTitle}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HelloMessage);

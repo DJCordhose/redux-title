@@ -1,15 +1,10 @@
 import { createStore, combineReducers } from 'redux'
+import {titleReducer, syncReduxAndTitle} from '../../src/index'
 
-import {UPDATE_GREETING} from './actions'
-
-function greetingReducer(state = 'Hello', action) {
-    if (action.type === UPDATE_GREETING) {
-        return action.greeting;
-    }
-    return state;
-}
 const store = createStore(combineReducers({
-    greeting: greetingReducer
+    title: titleReducer
 }));
+
+syncReduxAndTitle(store);
 
 export default store;
