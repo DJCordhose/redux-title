@@ -1,7 +1,7 @@
 {
   "name": "redux-title",
   "version": "0.0.1",
-  "description": "Synchronization of docment title and redux state",
+  "description": "Synchronization of document title and redux state",
   "main": "lib/index",
   "repository": {
     "type": "git",

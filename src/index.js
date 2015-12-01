@@ -1,3 +1,5 @@
+// Action
+
 export const UPDATE_TITLE = "redux-title/UPDATE_TITLE";
 
 // Action creator
