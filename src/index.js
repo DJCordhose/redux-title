@@ -11,7 +11,7 @@ export function updateTitle(title) {
 
 // Reducer
 
-const initialState = document.title;
+const initialState = (typeof document !== 'undefined' && document.title) || null;
 
 export function titleReducer(state = initialState, action) {
     if (action.type === UPDATE_TITLE) {

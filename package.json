@@ -1,6 +1,6 @@
 {
   "name": "redux-title",
-  "version": "0.0.11",
+  "version": "0.0.1",
   "description": "Synchronization of docment title and redux state",
   "main": "lib/index",
   "repository": {
@@ -13,8 +13,9 @@
   "license": "MIT",
   "scripts": {
     "build": "mkdir -p lib && babel ./src/index.js --out-file ./lib/index.js",
-    "test": "karma start --single-run",
-    "test:watch": "karma start"
+    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test:karma": "karma start --single-run",
+    "test:karma:watch": "karma start"
   },
   "tags": [
     "react",
@@ -41,6 +42,7 @@
     "karma-sourcemap-loader": "0.3.6",
     "karma-webpack": "1.7.0",
     "mocha": "2.3.4",
+    "mocha-jsdom": "1.0.0",
     "phantomjs": "1.9.19",
     "redux": "3.0.4",
     "webpack": "1.12.9"

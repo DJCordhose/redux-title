@@ -1,8 +1,11 @@
-import expect from 'expect';
-import { createStore, combineReducers } from 'redux';
-import { updateTitle, UPDATE_TITLE, titleReducer, syncReduxAndTitle, subscribeToTitle } from '../src/index';
+import expect from 'expect'
+import jsdom from 'mocha-jsdom'
+import { createStore, combineReducers } from 'redux'
+import { updateTitle, UPDATE_TITLE, titleReducer, syncReduxAndTitle, subscribeToTitle } from '../src/index'
+
 
 describe('syncReduxAndTitle', () => {
+    typeof document === 'undefined' && jsdom();
 
     let store;
     let unsubscribe;

@@ -2,8 +2,9 @@ const webpack = require('webpack');
 
 module.exports = function (config) {
     config.set({
+        // TODO: IE not covered and safari fails randomly
         //browsers: ['Chrome', 'Firefox', 'PhantomJS', 'Safari'],
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome', 'Firefox', 'PhantomJS'],
         frameworks: ['mocha'],
         reporters: ['mocha'],
 
