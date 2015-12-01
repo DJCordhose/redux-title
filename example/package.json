@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "clean": "rm -rf dist/ public/dist/",
-    "webpack": "webpack --watch"
+    "webpack": "webpack",
+    "webpack:watch": "webpack && open public/index.html && webpack --watch"
   },
   "license": "ISC",
   "devDependencies": {
