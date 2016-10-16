@@ -1,8 +1,10 @@
 // tests showing how to use redux-title with immutable.js
-// using approach of
-// - https://github.com/gajus/redux-immutable
-// - https://github.com/indexiatech/redux-immutablejs
-// - https://github.com/erikras/redux-form
+//
+// https://facebook.github.io/immutable-js/
+// https://github.com/gajus/redux-immutable
+// https://github.com/indexiatech/redux-immutablejs
+// https://github.com/erikras/redux-form
+// https://www.sitepoint.com/how-to-build-a-todo-app-using-react-redux-and-immutable-js/
 
 import expect from 'expect'
 import Immutable from 'immutable'

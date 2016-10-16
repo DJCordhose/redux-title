@@ -1,21 +1,34 @@
+/* @flow */
+
+type Action = {
+    type: string,
+    title: string
+};
+
+type Store = {
+    getState(): any,
+    subscribe(callback: () => void): () => void,
+    dispatch(action: Action): void
+};
+
 // Action
 
-export const UPDATE_TITLE = "redux-title/UPDATE_TITLE";
+export const UPDATE_TITLE = 'redux-title/UPDATE_TITLE';
 
 // Action creator
 
-export function updateTitle(title) {
+export function updateTitle(title: string): Action {
     return {
         type: UPDATE_TITLE,
         title: title
-    }
+    };
 }
 
 // Reducer
 
 const initialState = (typeof document !== 'undefined' && document.title) || null;
 
-export function titleReducer(state = initialState, action) {
+export function titleReducer(state: any = initialState, action: Action) {
     if (action.type === UPDATE_TITLE) {
         return action.title;
     }
@@ -29,7 +42,7 @@ export function titleReducer(state = initialState, action) {
 // http://caniuse.com/#feat=mutationobserver
 // https://msdn.microsoft.com/en-us/library/ms536956(v=vs.85).aspx
 
-export function subscribeToTitle(getTitle, setTitle) {
+export function subscribeToTitle(getTitle: () => string, setTitle: (title: string) => void) {
     const titleElement = document.querySelector('title');
     const docEl = document.documentElement;
 
@@ -51,18 +64,21 @@ export function subscribeToTitle(getTitle, setTitle) {
 
 
     function subscribeIE() {
+        // eslint-disable-next-line
         document.onpropertychange = function () {
-            if (window.event.propertyName == "title") {
+            if (window.event.propertyName == 'title') {
                 titleModified();
             }
         };
+        // eslint-disable-next-line
         return () => document.onpropertychange = undefined;
     }
 
     function subscribeAsModification() {
-        const type = "DOMSubtreeModified";
+        const type = 'DOMSubtreeModified';
         const listener = (evt) => {
             const t = evt.target;
+            // eslint-disable-next-line
             if (t === titleElement || (t.parentNode && t.parentNode === titleElement)) {
                 titleModified();
             }
@@ -88,14 +104,16 @@ export function subscribeToTitle(getTitle, setTitle) {
  * @param setTitle your function to set the title to the redux store (optional)
  * @returns unsubscribe function
  */
-export function syncReduxAndTitle(store, getTitle=null, setTitle=null) {
+export function syncReduxAndTitle(store: Store, getTitle: (() => string) | void,
+                                  setTitle: ((title: string) => void) | void) {
 
-    getTitle = getTitle || (() => store.getState().title);
-    setTitle = setTitle || (title => store.dispatch(updateTitle(title)));
-    const unsubscribeFromTitle = subscribeToTitle(getTitle, setTitle);
+    const getTitleOrDefault = getTitle || (() => store.getState().title);
+    const setTitleOrDefault = setTitle || (title => store.dispatch(updateTitle(title)));
+
+    const unsubscribeFromTitle = subscribeToTitle(getTitleOrDefault, setTitleOrDefault);
 
     const unsubscribeStore = store.subscribe(() => {
-        const title = getTitle();
+        const title = getTitleOrDefault();
         const oldTitle = document.title;
         if (oldTitle !== title) {
             document.title = title;

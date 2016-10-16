@@ -16,7 +16,8 @@
     "test": "mocha test/index.js -r jsdom-global/register --compilers js:babel-core/register",
     "test:karma": "karma start --single-run",
     "test:karma:watch": "karma start",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "eslint": "esw -w src"
   },
   "tags": [
     "react",
@@ -30,9 +31,17 @@
   "devDependencies": {
     "babel-cli": "*",
     "babel-core": "*",
+    "babel-eslint": "^7.0.0",
     "babel-loader": "*",
+    "babel-plugin-transform-flow-strip-types": "^6.14.0",
     "babel-preset-es2015": "*",
+    "eslint": "*",
+    "eslint-plugin-flowtype": "*",
+    "eslint-plugin-flowtype-errors": "*",
+    "eslint-plugin-react": "^6.4.1",
+    "eslint-watch": "*",
     "expect": "*",
+    "flow-bin": "latest",
     "immutable": "^3.8.1",
     "jsdom": "^9.7.1",
     "jsdom-global": "^2.1.0",
