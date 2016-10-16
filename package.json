@@ -48,6 +48,7 @@
     "mocha": "*",
     "phantomjs": "^1.9.19",
     "redux": "*",
+    "redux-immutable": "^3.0.8",
     "webpack": "*"
   }
 }

@@ -2,7 +2,7 @@ import expect from 'expect'
 import { createStore, combineReducers } from 'redux'
 import { updateTitle, UPDATE_TITLE, titleReducer, syncReduxAndTitle, subscribeToTitle } from '../src/index'
 
-
+// TODO Tests no longer run properly without real DOM as document.title change does not seem to trigger event with JSDOM
 describe('syncReduxAndTitle', () => {
     let store;
     let unsubscribe;

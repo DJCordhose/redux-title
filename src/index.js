@@ -83,10 +83,10 @@ export function subscribeToTitle(getTitle, setTitle) {
 
 /**
  *
- * @param store
- * @param getTitle
- * @param setTitle
- * @returns {unsubscribe}
+ * @param store the redux store
+ * @param getTitle your function to get the title from the redux store (optional)
+ * @param setTitle your function to set the title to the redux store (optional)
+ * @returns unsubscribe function
  */
 export function syncReduxAndTitle(store, getTitle=null, setTitle=null) {
 
