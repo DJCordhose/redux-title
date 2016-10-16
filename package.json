@@ -1,6 +1,6 @@
 {
   "name": "redux-title",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Synchronization of document title and redux state",
   "main": "lib/index",
   "repository": {
@@ -13,7 +13,7 @@
   "license": "MIT",
   "scripts": {
     "build": "mkdir -p lib && babel ./src/index.js --out-file ./lib/index.js",
-    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test": "mocha test/index.js -r jsdom-global/register --compilers js:babel-core/register",
     "test:karma": "karma start --single-run",
     "test:karma:watch": "karma start",
     "prepublish": "npm run build"
@@ -28,24 +28,26 @@
     "router"
   ],
   "devDependencies": {
-    "babel-cli": "6.2.0",
-    "babel-core": "6.2.1",
-    "babel-loader": "^6.2.0",
-    "babel-preset-es2015": "6.1.18",
-    "expect": "1.13.0",
-    "karma": "0.13.15",
-    "karma-chrome-launcher": "0.2.1",
-    "karma-firefox-launcher": "0.1.7",
-    "karma-mocha": "0.2.1",
-    "karma-mocha-reporter": "1.1.3",
-    "karma-phantomjs-launcher": "0.2.1",
-    "karma-safari-launcher": "0.1.1",
-    "karma-sourcemap-loader": "0.3.6",
-    "karma-webpack": "1.7.0",
-    "mocha": "2.3.4",
-    "mocha-jsdom": "1.0.0",
-    "phantomjs": "1.9.19",
-    "redux": "3.0.4",
-    "webpack": "1.12.9"
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-loader": "*",
+    "babel-preset-es2015": "*",
+    "expect": "*",
+    "immutable": "^3.8.1",
+    "jsdom": "^9.7.1",
+    "jsdom-global": "^2.1.0",
+    "karma": "*",
+    "karma-chrome-launcher": "*",
+    "karma-firefox-launcher": "*",
+    "karma-mocha": "*",
+    "karma-mocha-reporter": "*",
+    "karma-phantomjs-launcher": "*",
+    "karma-safari-launcher": "*",
+    "karma-sourcemap-loader": "*",
+    "karma-webpack": "*",
+    "mocha": "*",
+    "phantomjs": "^1.9.19",
+    "redux": "*",
+    "webpack": "*"
   }
 }

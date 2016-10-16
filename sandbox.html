@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function titleModified() {
+        console.log('yo');
+    }
+
+    var titleEl = document.querySelector('title');
+    var docEl = document.documentElement;
+
+    if (docEl && docEl.addEventListener) {
+        docEl.addEventListener("DOMSubtreeModified", function(evt) {
+            var t = evt.target;
+            if (t === titleEl || (t.parentNode && t.parentNode === titleEl)) {
+                titleModified();
+            }
+        }, false);
+    } else {
+        document.onpropertychange = function() {
+            if (window.event.propertyName == "title") {
+                titleModified();
+            }
+        };
+    }
+
+    // create an observer instance
+//    var observer = new MutationObserver(function(mutations) {
+//        mutations.forEach(function(mutation) {
+//            console.log(mutation.type);
+//        });
+//    });
+//
+//    // configuration of the observer:
+//    var config = { childList: true };
+//
+//    // pass in the target node, as well as the observer options
+//    observer.observe(target, config);
+</script>
+
+</body>
+</html>

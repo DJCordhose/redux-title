@@ -81,12 +81,21 @@ export function subscribeToTitle(getTitle, setTitle) {
     }
 }
 
-export function syncReduxAndTitle(store) {
+/**
+ *
+ * @param store
+ * @param getTitle
+ * @param setTitle
+ * @returns {unsubscribe}
+ */
+export function syncReduxAndTitle(store, getTitle=null, setTitle=null) {
 
-    const unsubscribeFromTitle = subscribeToTitle(() => store.getState().title, (title) => store.dispatch(updateTitle(title)));
+    getTitle = getTitle || (() => store.getState().title);
+    setTitle = setTitle || (title => store.dispatch(updateTitle(title)));
+    const unsubscribeFromTitle = subscribeToTitle(getTitle, setTitle);
 
     const unsubscribeStore = store.subscribe(() => {
-        const title = store.getState().title;
+        const title = getTitle();
         const oldTitle = document.title;
         if (oldTitle !== title) {
             document.title = title;

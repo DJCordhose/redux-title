@@ -1,9 +1,17 @@
+// tests showing how to use redux-title with immutable.js
+// using approach of
+// - https://github.com/gajus/redux-immutable
+// - https://github.com/indexiatech/redux-immutablejs
+// - https://github.com/erikras/redux-form
+
 import expect from 'expect'
+import immutable from 'immutable'
 import { createStore, combineReducers } from 'redux'
 import { updateTitle, UPDATE_TITLE, titleReducer, syncReduxAndTitle, subscribeToTitle } from '../src/index'
 
 
-describe('syncReduxAndTitle', () => {
+xdescribe('syncReduxAndTitle with immutable.js', () => {
+
     let store;
     let unsubscribe;
 
@@ -21,14 +29,14 @@ describe('syncReduxAndTitle', () => {
         }
     });
 
-    xit('subscribe works', () => {
+    it('subscribe works', () => {
         let newTitle;
         const unsubscribe = subscribeToTitle(() => 'old', (title) => newTitle = title);
         document.title = 'new';
         expect(newTitle).toEqual('new');
     });
 
-    xit('unsubscribe works', () => {
+    it('unsubscribe works', () => {
         let newTitle = 'unset';
         const unsubscribe = subscribeToTitle(() => 'old', (title) => newTitle = title);
         unsubscribe();
@@ -43,7 +51,7 @@ describe('syncReduxAndTitle', () => {
         expect(document.title).toEqual(title);
     });
 
-    xit('syncs title -> redux', () => {
+    it('syncs title -> redux', () => {
         var title = 'yo';
         document.title = title;
         expect(store.getState().title).toEqual(title);

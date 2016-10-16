@@ -7,17 +7,10 @@ class HelloMessage extends React.Component {
         const {title, updateTitle} = this.props;
         return (
             <div>
-                <input ref="in"
-                       onChange={event => updateTitle(event.target.value)}
+                <input onChange={event => updateTitle(event.target.value)}
                        value={title} />
-                <p>{title}</p>
-                <button
-                    onClick={() => {
-                        updateTitle('');
-                        this.refs.in.focus();
-                    }}>
-                    Clear
-                </button>
+                <p>Type into input field and see tab title change</p>
+                <p>Also: Open your console and try <code>document.title = 'it works'</code> and see input field updated</p>
             </div>);
     }
 }

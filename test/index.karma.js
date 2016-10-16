@@ -21,14 +21,14 @@ describe('syncReduxAndTitle', () => {
         }
     });
 
-    xit('subscribe works', () => {
+    it('subscribe works', () => {
         let newTitle;
         const unsubscribe = subscribeToTitle(() => 'old', (title) => newTitle = title);
         document.title = 'new';
         expect(newTitle).toEqual('new');
     });
 
-    xit('unsubscribe works', () => {
+    it('unsubscribe works', () => {
         let newTitle = 'unset';
         const unsubscribe = subscribeToTitle(() => 'old', (title) => newTitle = title);
         unsubscribe();
@@ -43,7 +43,7 @@ describe('syncReduxAndTitle', () => {
         expect(document.title).toEqual(title);
     });
 
-    xit('syncs title -> redux', () => {
+    it('syncs title -> redux', () => {
         var title = 'yo';
         document.title = title;
         expect(store.getState().title).toEqual(title);

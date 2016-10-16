@@ -2,17 +2,18 @@ const webpack = require('webpack');
 
 module.exports = function (config) {
     config.set({
-        // TODO: IE not covered and safari fails randomly
-        //browsers: ['Chrome', 'Firefox', 'PhantomJS', 'Safari'],
-        browsers: ['Chrome', 'Firefox', 'PhantomJS'],
+        // TODO: IE/Edge not covered (as I am running on a Mac)
+        // browsers: ['Chrome', 'Firefox', 'PhantomJS', 'Safari'],
+        // browsers: ['Chrome', 'Firefox', 'PhantomJS'],
+        browsers: ['PhantomJS'],
         frameworks: ['mocha'],
         reporters: ['mocha'],
 
         files: [
-            "test/index.js"
+            "test/**.karma.js"
         ],
         preprocessors: {
-            ["test/index.js"]: ["webpack", "sourcemap"]
+            ["test/**.karma.js"]: ["webpack", "sourcemap"]
         },
         webpack: {
             devtool: 'inline-source-map',
