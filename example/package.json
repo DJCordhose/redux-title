@@ -22,6 +22,6 @@
     "react-dom": "*",
     "react-redux": "*",
     "redux": "*",
-    "redux-title": "*"
+    "redux-title": "0.0.3"
   }
 }

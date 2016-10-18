@@ -23073,9 +23073,11 @@
 	exports.titleReducer = titleReducer;
 	exports.subscribeToTitle = subscribeToTitle;
 	exports.syncReduxAndTitle = syncReduxAndTitle;
+	
+	
 	// Action
 	
-	var UPDATE_TITLE = exports.UPDATE_TITLE = "redux-title/UPDATE_TITLE";
+	var UPDATE_TITLE = exports.UPDATE_TITLE = 'redux-title/UPDATE_TITLE';
 	
 	// Action creator
 	
@@ -23091,7 +23093,7 @@
 	var initialState = typeof document !== 'undefined' && document.title || null;
 	
 	function titleReducer() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
 	    var action = arguments[1];
 	
 	    if (action.type === UPDATE_TITLE) {
@@ -23130,20 +23132,23 @@
 	    }
 	
 	    function subscribeIE() {
+	        // eslint-disable-next-line
 	        document.onpropertychange = function () {
-	            if (window.event.propertyName == "title") {
+	            if (window.event.propertyName == 'title') {
 	                titleModified();
 	            }
 	        };
+	        // eslint-disable-next-line
 	        return function () {
 	            return document.onpropertychange = undefined;
 	        };
 	    }
 	
 	    function subscribeAsModification() {
-	        var type = "DOMSubtreeModified";
+	        var type = 'DOMSubtreeModified';
 	        var listener = function listener(evt) {
 	            var t = evt.target;
+	            // eslint-disable-next-line
 	            if (t === titleElement || t.parentNode && t.parentNode === titleElement) {
 	                titleModified();
 	            }
@@ -23158,22 +23163,32 @@
 	        return subscribeAsModification();
 	        // stangely does not work in chrome when started over karma
 	    } else if (typeof MutationObserver !== 'undefined') {
-	            return subscribeAsObserver();
-	        } else {
-	            return subscribeIE();
-	        }
+	        return subscribeAsObserver();
+	    } else {
+	        return subscribeIE();
+	    }
 	}
 	
-	function syncReduxAndTitle(store) {
+	/**
+	 *
+	 * @param store the redux store
+	 * @param getTitle your function to get the title from the redux store (optional)
+	 * @param setTitle your function to set the title to the redux store (optional)
+	 * @returns unsubscribe function
+	 */
+	function syncReduxAndTitle(store, getTitle, setTitle) {
 	
-	    var unsubscribeFromTitle = subscribeToTitle(function () {
+	    var getTitleOrDefault = getTitle || function () {
 	        return store.getState().title;
-	    }, function (title) {
+	    };
+	    var setTitleOrDefault = setTitle || function (title) {
 	        return store.dispatch(updateTitle(title));
-	    });
+	    };
+	
+	    var unsubscribeFromTitle = subscribeToTitle(getTitleOrDefault, setTitleOrDefault);
 	
 	    var unsubscribeStore = store.subscribe(function () {
-	        var title = store.getState().title;
+	        var title = getTitleOrDefault();
 	        var oldTitle = document.title;
 	        if (oldTitle !== title) {
 	            document.title = title;
